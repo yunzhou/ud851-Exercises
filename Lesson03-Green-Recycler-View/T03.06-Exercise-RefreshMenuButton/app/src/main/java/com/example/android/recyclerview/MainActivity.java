@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,8 +79,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     // TODO (7) Override onCreateOptionsMenu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
+
     // TODO (8) Use getMenuInflater().inflate to inflate the menu
     // TODO (9) Return true to display this menu
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.action_refresh){
+            mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+            mNumbersList.setAdapter(mAdapter);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     // TODO (10) Override onOptionsItemSelected
     // TODO (11) Within this method, get the ID from the MenuItem
