@@ -17,6 +17,7 @@ package com.example.android.asynctaskloader;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,9 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     // TODO (1) Create a static final key to store the query's URL
+    private static final String QUERY_URL_KEY="url.key";
+    private static final String SEARCH_RESULT_KEY="search.result.key";
+
 
     // TODO (2) Create a static final key to store the search's raw JSON
 
@@ -60,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         // TODO (9) If the savedInstanceState bundle is not null, set the text of the URL and search results TextView respectively
+        if(savedInstanceState!=null){
+            if(savedInstanceState.containsKey(QUERY_URL_KEY)){
+                mUrlDisplayTextView.setText(savedInstanceState.getString(QUERY_URL_KEY));
+            }
+            if(savedInstanceState.containsKey(SEARCH_RESULT_KEY)){
+                mSearchResultsTextView.setText(savedInstanceState.getString(SEARCH_RESULT_KEY));
+            }
+        }
     }
 
     /**
@@ -152,6 +164,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO (3) Override onSaveInstanceState to persist data across Activity recreation
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(QUERY_URL_KEY,mUrlDisplayTextView.getText().toString());
+        outState.putString(SEARCH_RESULT_KEY,mSearchResultsTextView.getText().toString());
+    }
+
     // Do the following steps within onSaveInstanceState
     // TODO (4) Make sure super.onSaveInstanceState is called before doing anything else
 
